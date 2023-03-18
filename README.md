@@ -51,4 +51,4 @@ Berikut ini contoh soal pilihan ganda.
 Berikut ini contoh soal tabel benar salah.
 ![Tabel Benar Salah](https://res.cloudinary.com/dnf9bfdne/image/upload/v1679148247/tabel-benar-salah_esgxpn.jpg)<br><br>
 11. Setelah membuat soal, kamu bisa langsung keluar dari admin dan menuju `http://127.0.0.1:8000`. Berikut ini contoh tampilan aplikasi saat dibuka melalui browser smartphone.<br>
-![Demo Aplikasi](https://res.cloudinary.com/dnf9bfdne/video/upload/v1679149451/demo_gubauf.mp4)
+![Demo Aplikasi](https://user-images.githubusercontent.com/107313576/226112267-85455bbe-ec43-4530-8b2a-acad0de1c223.mp4)
