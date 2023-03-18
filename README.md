@@ -50,7 +50,5 @@ Berikut ini contoh soal pilihan ganda.
 ![Piliha Ganda](https://res.cloudinary.com/dnf9bfdne/image/upload/v1679148039/pilihan-ganda_yxb1ya.jpg)<br><br>
 Berikut ini contoh soal tabel benar salah.
 ![Tabel Benar Salah](https://res.cloudinary.com/dnf9bfdne/image/upload/v1679148247/tabel-benar-salah_esgxpn.jpg)<br><br>
-11. Setelah membuat soal, kamu bisa langsung keluar dari admin dan menuju `http://127.0.0.1:8000`. Berikut ini contoh tampilan aplikasi saat dibuka melalui browser smartphone.
-<video width="320" height="240" controls>
-  <source src="https://res.cloudinary.com/dnf9bfdne/video/upload/v1679149451/demo_gubauf.mp4" type="video/mp4">
-</video>
+11. Setelah membuat soal, kamu bisa langsung keluar dari admin dan menuju `http://127.0.0.1:8000`. Berikut ini contoh tampilan aplikasi saat dibuka melalui browser smartphone.<br>
+![Demo Aplikasi](https://res.cloudinary.com/dnf9bfdne/video/upload/v1679149451/demo_gubauf.mp4)
