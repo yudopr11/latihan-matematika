@@ -146,14 +146,17 @@ CKEDITOR_CONFIGS = {
             {'name': 'paragraph',
              'items': ['NumberedList', 'BulletedList', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock']},
             {'name': 'insert', 'items': ['Link', 'Unlink', 'Image', 'Table']},
+            {'name': 'preview', 'items': ['Preview']},
             ],
         'toolbar': 'YourCustomToolbarConfig',
         'stylesSet': 'mystyles:/static/ckeditor/ckeditor/custom-ckeditor-style.js',
         'contentsCss': ['https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css', '/static/quiz/css/quiz-mobile.css'],
         'extraPlugins': ','.join([
-            'fluid-table'
+            'fluid-table',
+            'mathjax'
         ]),
         'removePlugins': 'exportpdf',
+        'mathJaxLib': 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js',
     }
 }
 
