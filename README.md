@@ -45,12 +45,16 @@ python manage.py migrate
 ```
 9. Jalankan command berikut untuk mengumpulkan file static (image, js, css, dll).
 ```
+python manage.py collectstatic
+```
+10. Jalan command berikut untuk menjalankan server di lokal komputer.
+```
 python manage.py runserver
 ```
-10. Masuk ke Django Admin (`http://127.0.0.1:8000/admin`). Pada kolom kiri pilih `Bank soals` dan klik `ADD BANK SOAL` untuk memasukan soal ke database sqlite.<br><br>
+11. Masuk ke Django Admin (`http://127.0.0.1:8000/admin`). Pada kolom kiri, pilih `Bank soals` dan klik `ADD BANK SOAL` untuk memasukan soal ke db.sqlite.<br><br>
 Berikut ini contoh soal pilihan ganda.
 ![Piliha Ganda](https://res.cloudinary.com/dnf9bfdne/image/upload/v1679148039/pilihan-ganda_yxb1ya.jpg)<br><br>
 Berikut ini contoh soal tabel benar salah.
 ![Tabel Benar Salah](https://res.cloudinary.com/dnf9bfdne/image/upload/v1679148247/tabel-benar-salah_esgxpn.jpg)<br><br>
-11. Setelah membuat soal, kamu bisa langsung keluar dari admin dan menuju `http://127.0.0.1:8000`. Berikut ini contoh tampilan aplikasi saat dibuka melalui browser smartphone.<br>
+12. Setelah membuat soal, kamu bisa langsung keluar dari admin dan menuju `http://127.0.0.1:8000`. Berikut ini contoh tampilan aplikasi saat dibuka melalui browser smartphone.<br>
 ![Demo Aplikasi](https://user-images.githubusercontent.com/107313576/226112267-85455bbe-ec43-4530-8b2a-acad0de1c223.mp4)
