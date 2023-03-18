@@ -7,7 +7,9 @@ url (tba)
 - Mendukung soal tabel benar salah.
 - Mendukung latex.
 - Mendukung rich text formatting untuk mempermudah mengetik soal dan penjelasan (untuk latex harus ketik manual dimulai dengan `$` dan diakhiri `$`).
+- Pilihan jawaban selalu acak.
 - User dapat memfilter soal dari sumber soal.
+- User dapat melihat progress pengerjaan quiz mereka.
 ## Cara Pakai
 1. Lakukan clone terhadap repositori ini. <br>
 ```
