@@ -1,5 +1,5 @@
 # latihan-matematika
-Aplikasi kuis latihan matematika untuk belajar ujian masuk perguruan tinggi negeri. Aplikasi ini di desain untuk tampil lebih menarik saat dibuka melalui browser smartphone.
+Aplikasi ini dibuat menggunakan Django, salah framework yang ada di python untuk membuat website secara fullstack. Latihan Matematika ini berbentuk kuis yang berguna untuk belajar ujian masuk perguruan tinggi negeri. Aplikasi ini di desain untuk tampil lebih menarik saat dibuka melalui browser smartphone.
 ## Demo Live Aplikasi
 url (tba)
 ## Fitur
@@ -15,11 +15,11 @@ url (tba)
 ```
 git clone https://github.com/yudopr11/latihan-matematika.git
 ```
-2. Buat virtual environment di dalam folder repositori. Kamu bisa namain nama virtual environment (tanpa tanda petik ' ) sesuka hati.
+2. Buat virtual environment di dalam folder repositori. Kamu bisa namain nama virtual environment (`nama-virtual-env`) sesuka hati.
 ```
-python -m venv 'nama-virtual-env'
+python -m venv nama-virtual-env
 ```
-3. Aktifkan virtual environment di folder dengan menjalan command `venv\Scripts\activate.bat` untuk cmd atau `venv\Scripts\Activate.ps1` untuk shell.
+3. Aktifkan virtual environment di folder dengan menjalan command `nama-virtual-env\Scripts\activate.bat` untuk cmd atau `nama-virtual-env\Scripts\Activate.ps1` untuk shell.
 4. Install requirement packages yang diperlukan.
 ```
 pip install -r requirements.txt
