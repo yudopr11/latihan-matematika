@@ -1,7 +1,6 @@
-
+nama-virtual-env/
 __pycache__/
 .env
-migrations/
 venv/
 staticfiles/
 db.sqlite3

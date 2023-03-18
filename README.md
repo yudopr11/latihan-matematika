@@ -34,14 +34,14 @@ ALLOWED_HOSTS='*'
 ```
 python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
 ```
-7. Buat super user dengan command berikut.
-```
-python manage.py createsuperuser
-```
-8. Jalankan dua command berikut untuk membuat tabel di db.sqlite.
+7. Jalankan dua command berikut untuk membuat tabel di db.sqlite.
 ```
 python manage.py makemigrations
 python manage.py migrate
+```
+8. Buat super user dengan command berikut.
+```
+python manage.py createsuperuser
 ```
 9. Jalankan command berikut untuk mengumpulkan file static (image, js, css, dll).
 ```
