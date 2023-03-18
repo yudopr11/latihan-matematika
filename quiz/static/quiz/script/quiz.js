@@ -144,7 +144,9 @@ document.getElementById("btn-lanjut").addEventListener('click', function () {
 // const btnLanjut = document.getElementById('btn-lanjut');
 document.getElementById("btn-submit").addEventListener('click', function () {
     document.getElementById("btn-shuffle").classList.add('hidden');
-    document.getElementById('btn-solution').classList.remove('hidden');
+    if (userData.question.explanationType != null || userData.question.explanation != '') {
+        document.getElementById('btn-solution').classList.remove('hidden');
+    };
     document.getElementById("btn-submit").classList.add('hidden');
     
     let userChoice;
