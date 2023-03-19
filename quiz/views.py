@@ -26,6 +26,9 @@ def bank_soal_serializer(pk):
         except:
             data_json[id]["choices"] = json.loads(data_json[id]["choices"].replace("\'","\""))
 
+        if data_json[id]["answer"][0] in ("\'","\"") and data_json[id]["answer"][-1] in ("\'","\""):
+            data_json[id]["answer"] = data_json[id]["answer"][1:-1]
+
         if data_json[id]["answer"][0] == "{" and data_json[id]["answer"][-1] == "}":
             try:
                 data_json[id]["answer"] = json.loads(data_json[id]["answer"])
