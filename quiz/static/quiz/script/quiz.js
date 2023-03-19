@@ -55,7 +55,7 @@ function updateDom(quizData){
         for (let key in quizData.question.choices) {
             choices += `<div class="choice-wrapper">
             <input type="radio" class="form-check-input btn-check" name="choices" id="option-${key}" value="${quizData.question.choices[key]}">
-            <label class="btn btn-choice" for="option${key}">${key}</label>
+            <label class="btn btn-choice" for="option-${key}">${key}</label>
             <label for="option-${key}">${quizData.question.choices[key]}</label>
             </div>`;
         };
