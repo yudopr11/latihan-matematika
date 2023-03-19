@@ -87,11 +87,11 @@ function updateDom(quizData){
     } catch(e) {
         console.log(e)
     };
+    document.getElementById('load-question').classList.add('hidden')
 };
 
 function shuffle(url) {
     let body = updateUserData(userData);
-
     fetch(url, {
         method: 'post',
         headers: {
@@ -122,14 +122,21 @@ window.addEventListener('load', function() {
                 updateUserData(res);
             });
     };
+    document.getElementById('load-question').classList.remove('hidden')
     initial(url);
 });
 
 document.getElementById("btn-shuffle").addEventListener('click', function () {
+    document.getElementById('load-question').classList.remove('hidden')
+    document.getElementById("question-text").innerHTML = '';
+    document.getElementById("question-choices").innerHTML = '';
     shuffle(urlShuffle);
 });
 
 document.getElementById("btn-lanjut").addEventListener('click', function () {
+    document.getElementById('load-question').classList.remove('hidden')
+    document.getElementById("question-text").innerHTML = '';
+    document.getElementById("question-choices").innerHTML = '';
     shuffle(urlShuffle);
     document.querySelector('.alert:not(.hidden)').classList.add('hidden');
     document.getElementById("btn-shuffle").classList.remove('hidden');
@@ -143,12 +150,9 @@ document.getElementById("btn-lanjut").addEventListener('click', function () {
 // const btnSubmit = document.getElementById('btn-submit');
 // const btnLanjut = document.getElementById('btn-lanjut');
 document.getElementById("btn-submit").addEventListener('click', function () {
-    document.getElementById("btn-shuffle").classList.add('hidden');
-    if (userData.question.explanationType != null && (userData.question.explanation != null || userData.question.explanation != '')) {
-        document.getElementById('btn-solution').classList.remove('hidden');
-    };
     document.getElementById("btn-submit").classList.add('hidden');
-    
+    document.getElementById("btn-shuffle").classList.add('hidden');
+    document.getElementById("btn-loading").classList.remove('hidden');
     let userChoice;
     let nullCheck = 0;
     if(userData.question.type == 'pilihan-ganda'){
@@ -203,6 +207,7 @@ document.getElementById("btn-submit").addEventListener('click', function () {
             document.getElementById('salah').scrollIntoView();
         };
 
+        document.getElementById("btn-loading").classList.add('hidden');
         if(res.allQuestionId.length == res.questionIdTaken.length){
             document.getElementById('btn-selesai').classList.remove('hidden');
         } else {
@@ -210,7 +215,11 @@ document.getElementById("btn-submit").addEventListener('click', function () {
         };
 
         document.querySelector(".progress-bar").style.width = `${res.progress*100}%`;
-
+        
+        if (userData.question.explanationType != null && (userData.question.explanation != null || userData.question.explanation != '')) {
+            document.getElementById('btn-solution').classList.remove('hidden');
+        };
+        
         updateUserData(res);
     });
 });
@@ -233,6 +242,9 @@ document.getElementById("btn-filter").addEventListener('click', function () {
     };
 
     if(JSON.stringify(userData.activeFilter) != JSON.stringify(userFilter)) {
+        document.getElementById('load-question').classList.remove('hidden')
+        document.getElementById("question-text").innerHTML = '';
+        document.getElementById("question-choices").innerHTML = '';
         let body =  updateUserData(userData);
         body.activeFilter = userFilter;
         fetch(urlFilter, {

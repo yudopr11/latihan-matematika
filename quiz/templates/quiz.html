@@ -47,6 +47,9 @@
                 </div>
             </div>
             <div class="middle-shape">
+                <div class="loading hidden" id="load-question">
+                    <div class="spinner-border" role="status"></div>
+                </div>
                 <div class="question-wrapper">
                     <div class="question" id="question-text">
                         {% comment %} FILL WITH QUESTION TEXT {% endcomment %}
@@ -73,6 +76,9 @@
                     <button class="btn btn-solution hidden" title="Buka Solusi" id="btn-solution"></button>
                     <button class="btn btn-outline-dark btn-submit" id="btn-submit" title="Submit Jawaban">Submit</button>
                     <button class="btn btn-outline-dark btn-lanjut hidden" id="btn-lanjut" title="Lanjut ke Soal Berikutnya">Lanjut</button>
+                    <div class="spinner-border hidden" role="status" id="btn-loading">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
                     <a class="btn btn-outline-dark btn-selesai hidden" id="btn-selesai" title="Selesai" href="{% url 'render-result' %}">Selesai</a>
                     <a class="btn btn-stop" title="Berhenti" id="btn-stop" href="{% url 'render-result' %}"></a>
                 </div>
