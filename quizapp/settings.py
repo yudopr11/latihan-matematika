@@ -128,7 +128,7 @@ STATICFILES_DIRS = [
     BASE_DIR / 'static'
 ]
 
-MEDIA_URL = '/media/'
+MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 # Default primary key field type
@@ -146,7 +146,7 @@ CKEDITOR_CONFIGS = {
             {'name': 'paragraph',
              'items': ['NumberedList', 'BulletedList', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock']},
             {'name': 'insert', 'items': ['Link', 'Unlink', 'Image', 'Table']},
-            {'name': 'preview', 'items': ['Preview']},
+            {'name': 'preview', 'items': ['Iframe','Preview']},
             ],
         'toolbar': 'YourCustomToolbarConfig',
         'stylesSet': 'mystyles:/static/ckeditor/ckeditor/custom-ckeditor-style.js',
