@@ -22,7 +22,7 @@
     </script>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
-    <script src="{% static 'quiz/script/quiz.js' %}" data-url="{% url 'quiz' %}" defer data-url-shuffle="{% url 'shuffle' %}" data-url-filter="{% url 'filter' %}" defer></script>
+    <script src="{% static 'quiz/script/quiz.js' %}" data-url="{% url 'preview' pk %}" data-url-shuffle="{% url 'shuffle' %}" data-url-filter="{% url 'filter' %}" defer></script>
     <link rel="icon" href="{% static 'global/image/favicon.png' %}">
     <title>Latihan Matematika • yudopr</title>
 </head>
@@ -35,7 +35,7 @@
                 <a class="back" href="/" title="Back Home"></a>
                 <h3>Latihan Matematika</h3>
             </div>
-            <div class="filter" data-bs-toggle="offcanvas" data-bs-target="#filter" id="filter-toggle" title="Filter"></div>
+            <div class="filter" data-bs-toggle="offcanvas" data-bs-target="#filter" id="filter-toggle" title="Filter" disabled></div>
         </div>
 
         <!-- CONTENT -->
@@ -72,15 +72,15 @@
             </div>
             <div class="bottom-shape">
                 <div class="bottom-menu">
-                    <button class="btn btn-shuffle" title="Ganti Soal" id="btn-shuffle"></button>
+                    <button class="btn btn-shuffle" title="Ganti Soal" id="btn-shuffle" disabled></button>
                     <button class="btn btn-solution hidden" title="Buka Solusi" id="btn-solution"></button>
                     <button class="btn btn-outline-dark btn-submit" id="btn-submit" title="Submit Jawaban">Submit</button>
-                    <button class="btn btn-outline-dark btn-lanjut hidden" id="btn-lanjut" title="Lanjut ke Soal Berikutnya">Lanjut</button>
+                    <button class="btn btn-outline-dark btn-lanjut hidden" id="btn-lanjut" title="Lanjut ke Soal Berikutnya" disabled>Lanjut</button>
                     <div class="spinner-border hidden" role="status" id="btn-loading">
                         <span class="visually-hidden">Loading...</span>
-                    </div>
-                    <a class="btn btn-outline-dark btn-selesai hidden" id="btn-selesai" title="Selesai" href="{% url 'render-result' %}">Selesai</a>
-                    <a class="btn btn-stop" title="Berhenti" id="btn-stop" href="{% url 'render-result' %}"></a>
+                      </div>
+                    <a class="btn btn-outline-dark btn-selesai hidden" id="btn-selesai" title="Selesai" href="{% url 'render-result' %}" style="pointer-events: none;">Selesai</a>
+                    <a class="btn btn-stop" title="Berhenti" id="btn-stop" href="{% url 'render-result' %}" style="pointer-events: none;"></a>
                 </div>
             </div>
         </div>

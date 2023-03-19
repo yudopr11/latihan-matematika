@@ -1,11 +1,14 @@
-from django.shortcuts import render, redirect
-from django.http import HttpResponse
-from django.views.decorators.csrf import csrf_exempt
-from django.core import serializers
-from .models import BankSoal
 import json
 import random
 from string import ascii_lowercase as alc
+
+from django.contrib.auth.decorators import login_required
+from django.core import serializers
+from django.http import HttpResponse
+from django.shortcuts import redirect, render
+from django.views.decorators.csrf import csrf_exempt
+
+from .models import BankSoal
 
 
 def bank_soal_serializer(pk):
@@ -259,3 +262,100 @@ def filter(request):
     return response
 
 
+@login_required
+def render_preview(request, pk):
+    allQuestionId = list(BankSoal.objects.values_list("pk", flat=True))
+    if int(pk) not in allQuestionId:
+        return HttpResponse("Kode soal salah atau tidak ada.")
+    
+    context = {'pk': pk}
+    return render(request, "preview.html", context)
+
+@login_required
+@csrf_exempt
+def preview(request, pk):
+    resp = {"status": 405}
+    filter = {"sources": sorted(list(set(BankSoal.objects.values_list("source", flat=True))))}
+    allQuestionId = list(BankSoal.objects.filter(status=1, source__in=filter["sources"]).values_list("pk", flat=True))
+    currQuestionId = pk
+    question = get_question(str(currQuestionId))
+    
+    if request.method == "GET":
+        resp = {"question": {
+                            "text": question["question"], 
+                            "choices": question["choices"], 
+                            "explanation": question["explanation"],
+                            "type": question["type"],
+                            "explanationType": question["explanation_type"],
+                            },
+                "filter": filter,
+                "activeFilter": filter,
+                "currQuestionId": currQuestionId,
+                "isCorrect": None,
+                "score": 0,
+                "answerHistory": {"correct": 0, "wrong": 0, "empty": 0},
+                "progress": 0,
+                "questionIdTaken": [],
+                "allQuestionId": allQuestionId,
+                "status": 200,
+                }
+        
+        response = HttpResponse(json.dumps(resp), content_type="application/json")
+        response.status_code = 200
+        return response
+    
+    if request.method == "POST":
+        userData = json.loads(request.body)
+        currQuestionId = userData["currQuestionId"]
+        question = get_question(str(currQuestionId))
+        
+        if userData["question"]["type"] == "tabel-benar-salah":
+            userData["userAnswer"] = json.loads(userData["userAnswer"])
+
+        isCorrect = (question["answer"] == userData["userAnswer"])
+        answerHistory = userData["answerHistory"]
+        
+        if userData["userAnswer"] is None:
+            score = userData["score"]
+            answerHistory["empty"] = answerHistory["empty"]+1
+
+        if isCorrect:
+            score = userData["score"]+1
+            answerHistory["correct"] = answerHistory["correct"]+1
+        else:
+            if userData["userAnswer"]:
+                score = userData["score"]
+                answerHistory["wrong"] = answerHistory["wrong"]+1
+
+        questionIdTaken = userData["questionIdTaken"]+[currQuestionId]
+        allQuestionId =  userData["allQuestionId"]
+        progress = len(questionIdTaken)/len(allQuestionId)
+        filter = userData["filter"]
+        activeFilter = userData["activeFilter"]
+        
+        resp = {"question": { 
+                            "text": question["question"], 
+                            "choices": question["choices"], 
+                            "explanation": question["explanation"],
+                            "type": question["type"],
+                            "explanationType": question["explanation_type"],
+                            },
+                "filter": filter,
+                "activeFilter": activeFilter,
+                "currQuestionId": currQuestionId,
+                "isCorrect": isCorrect,
+                "score": score,
+                "answerHistory": answerHistory,
+                "progress": progress,
+                "questionIdTaken":  questionIdTaken,
+                "allQuestionId": allQuestionId,
+                "status": 200,
+                }
+        request.session['quiz'] = resp
+        response = HttpResponse(json.dumps(resp), content_type="application/json")
+        response.status_code = 200
+        return response
+
+    response = HttpResponse(json.dumps(resp), content_type="application/json")
+    response.status_code = 405
+    return response

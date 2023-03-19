@@ -8,4 +8,6 @@ urlpatterns = [
     path('shuffle-quiz', views.shuffle, name='shuffle'),
     path('reset-quiz', views.reset, name='reset'),
     path('filter-quiz', views.filter, name='filter'),
+    path('preview/<int:pk>/', views.render_preview, name='render-preview'),
+    path('initial-preview/<int:pk>/', views.preview, name='preview'),
 ]
