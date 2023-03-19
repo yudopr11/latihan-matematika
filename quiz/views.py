@@ -20,10 +20,17 @@ def bank_soal_serializer(pk):
     for item in temp_json:
         id = str(item["pk"])
         data_json[id] = item["fields"]
-        data_json[id]["choices"] = json.loads(data_json[id]["choices"])
+        
+        try:
+            data_json[id]["choices"] = json.loads(data_json[id]["choices"])
+        except:
+            data_json[id]["choices"] = json.loads(data_json[id]["choices"].replace("\'","\""))
 
         if data_json[id]["answer"][0] == "{" and data_json[id]["answer"][-1] == "}":
-            data_json[id]["answer"] = json.loads(data_json[id]["answer"])
+            try:
+                data_json[id]["answer"] = json.loads(data_json[id]["answer"])
+            except:
+                data_json[id]["answer"] = json.loads(data_json[id]["answer"].replace("\'","\""))
 
     return data_json
 
