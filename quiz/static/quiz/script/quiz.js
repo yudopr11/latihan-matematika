@@ -245,7 +245,9 @@ document.getElementById("btn-filter").addEventListener('click', function () {
         document.getElementById('load-question').classList.remove('hidden')
         document.getElementById("question-text").innerHTML = '';
         document.getElementById("question-choices").innerHTML = '';
-        document.querySelector('.alert:not(.hidden)').classList.add('hidden');
+        if (document.querySelector('.alert:not(.hidden)') != null) {
+            document.querySelector('.alert:not(.hidden)').classList.add('hidden');
+        };
         let body =  updateUserData(userData);
         body.activeFilter = userFilter;
         fetch(urlFilter, {
