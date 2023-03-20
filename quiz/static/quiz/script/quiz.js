@@ -245,6 +245,7 @@ document.getElementById("btn-filter").addEventListener('click', function () {
         document.getElementById('load-question').classList.remove('hidden')
         document.getElementById("question-text").innerHTML = '';
         document.getElementById("question-choices").innerHTML = '';
+        document.querySelector('.alert:not(.hidden)').classList.add('hidden');
         let body =  updateUserData(userData);
         body.activeFilter = userFilter;
         fetch(urlFilter, {
@@ -258,7 +259,6 @@ document.getElementById("btn-filter").addEventListener('click', function () {
                 return response.json()
             }).then((res) => {
                 if (document.getElementById("btn-submit").classList.contains('hidden')) {
-                    document.querySelector('.alert:not(.hidden)').classList.add('hidden');
                     document.getElementById("btn-shuffle").classList.remove('hidden');
                     document.getElementById('btn-solution').classList.add('hidden');
                     document.getElementById("btn-submit").classList.remove('hidden');
