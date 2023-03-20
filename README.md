@@ -1,7 +1,7 @@
 # latihan-matematika
 Aplikasi ini dibuat menggunakan Django, salah satu framework yang ada di python untuk membuat website secara fullstack. Latihan Matematika ini berbentuk kuis yang berguna untuk belajar ujian masuk perguruan tinggi negeri. Aplikasi ini di desain untuk tampil lebih menarik saat dibuka melalui browser smartphone.
 ## Demo Live Aplikasi
-url (tba)
+https://yudopr.up.railway.app/latihan-matematika/
 ## Fitur
 - Mendukung soal pilihan ganda.
 - Mendukung soal tabel benar salah.
