@@ -2,6 +2,11 @@
 const url = document.currentScript.dataset.url
 const urlShuffle = document.currentScript.dataset.urlShuffle
 const urlFilter = document.currentScript.dataset.urlFilter
+const headers = {
+    "Content-Type": "application/json; charset=utf-8",
+    "Cache-Control": "no-cache",
+    "mode": "same-origin",
+}
 var userData;
 
 function capitalizeWords(str) {
@@ -94,10 +99,7 @@ function shuffle(url) {
     let body = updateUserData(userData);
     fetch(url, {
         method: 'post',
-        headers: {
-            "Content-Type": "application/json; charset=utf-8",
-            "mode": "same-origin",
-          },
+        headers: headers,
         body : JSON.stringify(body),
         }).then((response) => {
             return response.json()
@@ -111,10 +113,7 @@ window.addEventListener('load', function() {
     function initial(url) {
         fetch(url, {
             method: 'get',
-            headers: {
-                "Content-Type": "application/json; charset=utf-8",
-                "mode": "same-origin",
-              }
+            headers: headers,
             }).then((response) => {
                 return response.json();
             }).then((res) => {
@@ -188,10 +187,7 @@ document.getElementById("btn-submit").addEventListener('click', function () {
    
     fetch(url, {
     method: 'post',
-    headers: {
-        "Content-Type": "application/json; charset=utf-8",
-        "mode": "same-origin",
-      },
+    headers: headers,
     body: JSON.stringify(body),
     }).then((response) => {
         return response.json()
@@ -252,10 +248,7 @@ document.getElementById("btn-filter").addEventListener('click', function () {
         body.activeFilter = userFilter;
         fetch(urlFilter, {
             method: 'post',
-            headers: {
-                "Content-Type": "application/json; charset=utf-8",
-                "mode": "same-origin",
-                },
+            headers: headers,
             body: JSON.stringify(body),
             }).then((response) => {
                 return response.json()
