@@ -10,6 +10,11 @@ from django.views.decorators.csrf import csrf_exempt
 
 from .models import BankSoal
 
+headers = {
+    "Content-Type": "application/json; charset=utf-8",
+    "Cache-Control": "no-cache",
+    "mode": "same-origin",
+}
 
 def bank_soal_serializer(pk):
     if pk == "all":
@@ -122,7 +127,7 @@ def quiz(request):
                     "status": 200,
                     }
         
-        response = HttpResponse(json.dumps(resp), content_type="application/json")
+        response = HttpResponse(json.dumps(resp), headers=headers)
         response.status_code = 200
         return response
     
@@ -174,11 +179,11 @@ def quiz(request):
                 "status": 200,
                 }
         request.session['quiz'] = resp
-        response = HttpResponse(json.dumps(resp), content_type="application/json")
+        response = HttpResponse(json.dumps(resp), headers=headers)
         response.status_code = 200
         return response
     
-    response = HttpResponse(json.dumps(resp), content_type="application/json")
+    response = HttpResponse(json.dumps(resp), headers=headers)
     response.status_code = 405
     return response
 
@@ -211,11 +216,11 @@ def shuffle(request):
                 "status": 200,
                 }
         
-        response = HttpResponse(json.dumps(resp), content_type="application/json")
+        response = HttpResponse(json.dumps(resp), headers=headers)
         response.status_code = 200
         return response
     
-    response = HttpResponse(json.dumps(resp), content_type="application/json")
+    response = HttpResponse(json.dumps(resp), headers=headers)
     response.status_code = 405
     return response
 
@@ -253,11 +258,11 @@ def filter(request):
                 }
         
         request.session['quiz'] = resp
-        response = HttpResponse(json.dumps(resp), content_type="application/json")
+        response = HttpResponse(json.dumps(resp), headers=headers)
         response.status_code = 200
         return response
         
-    response = HttpResponse(json.dumps(resp), content_type="application/json")
+    response = HttpResponse(json.dumps(resp), headers=headers)
     response.status_code = 405
     return response
 
@@ -300,7 +305,7 @@ def preview(request, pk):
                 "status": 200,
                 }
         
-        response = HttpResponse(json.dumps(resp), content_type="application/json")
+        response = HttpResponse(json.dumps(resp), headers=headers)
         response.status_code = 200
         return response
     
@@ -352,10 +357,10 @@ def preview(request, pk):
                 "status": 200,
                 }
         request.session['quiz'] = resp
-        response = HttpResponse(json.dumps(resp), content_type="application/json")
+        response = HttpResponse(json.dumps(resp), headers=headers)
         response.status_code = 200
         return response
 
-    response = HttpResponse(json.dumps(resp), content_type="application/json")
+    response = HttpResponse(json.dumps(resp), headers=headers)
     response.status_code = 405
     return response
