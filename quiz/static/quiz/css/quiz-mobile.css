@@ -187,11 +187,6 @@ body {
     height: 30px;
 }
 
-.btn-shuffle:active,
-.btn-shuffle:focus {
-    background-image: url("/static/quiz/image/arrow-clockwise-active.svg");
-}
-
 .btn-stop {
     background-image: url("/static/quiz/image/x-circle.svg");
     background-repeat: no-repeat;

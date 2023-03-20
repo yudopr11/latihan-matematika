@@ -277,14 +277,16 @@ document.getElementById('filter').addEventListener('hide.bs.offcanvas', function
     document.getElementById('filter-toggle').className = 'filter rotated';
 });
 
-// RESET BUTTON & STOP BUTTON ANIMATION
+// SHUFFLE BUTTON & STOP BUTTON ANIMATION
 // const btnShuffle = document.getElementById("btn-shuffle");
 // const btnStop = document.getElementById('btn-stop');
 function removeBtnAni() {
+    document.getElementById('btn-shuffle').style.backgroundImage = 'url("/static/quiz/image/shuffle.svg")'
     document.getElementById("btn-shuffle").classList.remove('rotated360');
     document.getElementById('btn-stop').classList.remove("fliped");
 }
 document.getElementById("btn-shuffle").addEventListener('click', function () {
+    document.getElementById('btn-shuffle').style.backgroundImage = 'url("/static/quiz/image/arrow-clockwise-active.svg")'
     document.getElementById("btn-shuffle").classList.add('rotated360');
     setTimeout(removeBtnAni, 500);
 })
