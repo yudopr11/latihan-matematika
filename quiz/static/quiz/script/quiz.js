@@ -262,6 +262,9 @@ document.getElementById("btn-filter").addEventListener('click', function () {
                 if (res.currQuestionId) {
                     updateDom(res);
                     document.getElementById('question-text').scrollIntoView();
+                    document.getElementById('btn-shuffle').disabled = false
+                    document.getElementById('btn-submit').disabled = false
+                    document.getElementById('btn-stop').style.removeProperty('pointer-events')
                 } else {
                     document.getElementById('load-question').classList.add('hidden');
                     document.getElementById("question-text").innerHTML = `<p class="text-center">Soal dengan filter yang kamu pilih tidak ada.</p>`;
