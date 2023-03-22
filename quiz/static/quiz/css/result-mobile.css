@@ -1,36 +1,12 @@
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css");
+
 body {
     margin: 0;
 }
 
-.content {
-    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-    border-radius: 40px 40px 0 0;
-}
-
-.top-shape {
-    background-color: white;
-    height: 70px;
-    border-radius: 40px 40px 0 0;
-    padding: 20px;
-}
-
-.middle-shape {
-    background-color: white;
-    padding-top: 0;
-    padding-bottom: 1.5rem;
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
-    margin-top: 0;
-    border-radius: 0;
-    min-height: 100%;
-    height: calc(100vh - 272px);
-    overflow-y: visible;
-    overflow-x: hidden;
-    box-shadow: none;
-}
-
 .nav-mobile {
     visibility: visible;
+    height: 100px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -47,28 +23,66 @@ body {
 }
 
 .nav-mobile .nav-mobile-menu .back {
-    background-image: url("/static/quiz/image/arrow-left.svg");
-    background-repeat: no-repeat;
-    background-size: contain;
-    width: 20px;
-    height: 20px;
+    font-size: 1.5rem;
+    color: black;
 }
 
 .nav-mobile .nav-mobile-menu h3 {
     font-weight: 700;
+    margin-bottom: 0;
+}
+
+.content {
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    border-radius: 40px 40px 0 0;
+}
+
+.top-shape {
+    position: relative;
+    background-color: white;
+    max-width: 768px;
+    width: 100%;
+    height: 70px;
+    border-radius: 40px 40px 0 0;
+    padding: 20px;
+}
+
+.middle-shape {
+    position: relative;
+    background-color: white;
+    padding-top: 0;
+    padding-bottom: 1.5rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    margin-top: 0;
+    border-radius: 0;
+    max-width: 768px;
+    width: 100%;
+    min-height: 100%;
+    height: calc(100vh - 270px);
+    overflow-y: visible;
+    overflow-x: hidden;
+    box-shadow: none;
 }
 
 .bottom-shape {
+    position: fixed;
+    bottom: 0;
+    max-width: 768px;
+    width: 100%;
     height: 100px;
     background-color: white;
+    border-top: solid 1px #dadada;
 }
 
 .bottom-menu {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    gap: 3rem;
-    padding: 2rem;
+    gap: 2rem;
+    padding-right: 2rem;
+    padding-left: 2rem;
+    padding-top: 20px;
     border: 0;
     align-items: center;
 }
@@ -126,38 +140,45 @@ h5.strong {
     font-weight: bold;
     letter-spacing: 1px;
 }
+
 .btn.btn-reset,
 .btn.btn-next {
     border: 0px !important;
 }
-.btn-reset {
-    background-image: url("/static/quiz/image/arrow-clockwise.svg");
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-position: center;
-    width: 30px;
-    height: 30px;
+
+.btn-reset{
+    font-size: 2rem;
+    padding-left: 0;
+    padding-right: 0;
 }
 
-.btn-reset:active,
-.btn-reset:focus {
-    background-image: url("/static/quiz/image/arrow-clockwise-active.svg");
+.bi.bi-arrow-clockwise:active,
+.bi.bi-arrow-clockwise:focus {
+    color: black;
 }
-.btn.btn-outline-dark{
+
+.btn.btn-outline-dark {
     flex-grow: 1;
-    /* visibility: hidden; */
-    /* display: none; */
+    font-weight: 700;
 }
+
 .rotated360 {
-    transform: rotate(360deg);
-    transition: all 0.5s;
+    animation: rotate 0.5s linear infinite;
 }
+
+@keyframes rotate {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
 .hidden {
     visibility: hidden;
     display: none;
 }
+
 @media (min-width: 768px) {
-    
+
     .container,
     .container-md,
     .container-sm {

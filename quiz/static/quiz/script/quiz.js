@@ -5,12 +5,22 @@ const urlFilter = document.currentScript.dataset.urlFilter
 const headers = {
     "Content-Type": "application/json; charset=utf-8",
     "Cache-Control": "no-cache",
+    "X-CSRFToken": document.querySelector('input[name=csrfmiddlewaretoken]').value,
     "mode": "same-origin",
 }
 var userData;
 
 function capitalizeWords(str) {
-    return str.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+    if (str.includes(' ')) {
+        return str.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+    } else if (str.includes('-')) {
+        return str.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+    } else { return str.toUpperCase(); }
+};
+
+function mapFilterName(str) {
+    const map = {"sources": "Sumber Soal", "subject": "Subjek", "year" : "Tahun"};
+    return map[str];
 };
 
 function updateUserData(quizData) {
@@ -19,33 +29,32 @@ function updateUserData(quizData) {
         'filter': quizData.filter,
         'activeFilter': quizData.activeFilter,
         'currQuestionId': quizData.currQuestionId,
-        'score': quizData.score,
         'answerHistory': quizData.answerHistory,
-        'progress': quizData.progress, 
+        'progress': quizData.progress,
         'questionIdTaken': quizData.questionIdTaken,
         'allQuestionId': quizData.allQuestionId,
     };
     return userData;
 };
 
-function updateDom(quizData){
-    document.querySelector(".progress-bar").style.width = `${quizData.progress*100}%`;
+function updateDom(quizData) {
+    document.querySelector(".progress-bar").style.width = `${quizData.progress * 100}%`;
 
     let allFilter = '';
-    for (const key in quizData.filter){
-        allFilter += `<div class="filter-option"><h6>${capitalizeWords(key)}</h6><div class="option-list">`
+    for (const key in quizData.filter) {
+        allFilter += `<div class="filter-option"><h6>${mapFilterName(key)}</h6><div class="option-list">`
         for (let i in quizData.filter[key]) {
             if (quizData.activeFilter[key].includes(quizData.filter[key][i])) {
                 allFilter += `
                 <div class="form-check">
                     <input class="form-check-input" type="checkbox" id="${key}-${i}" name="${key}" value="${quizData.filter[key][i]}" checked>
-                    <label class="form-check-label" for="${key}-${i}">${quizData.filter[key][i].toUpperCase()}</label>
+                    <label class="form-check-label" for="${key}-${i}">${capitalizeWords(quizData.filter[key][i])}</label>
                 </div>`;
             } else {
                 allFilter += `
                 <div class="form-check">
                     <input class="form-check-input" type="checkbox" id="${key}-${i}" name="${key}" value="${quizData.filter[key][i]}">
-                    <label class="form-check-label" for="${key}-${i}">${quizData.filter[key][i].toUpperCase()}</label>
+                    <label class="form-check-label" for="${key}-${i}">${capitalizeWords(quizData.filter[key][i])}</label>
                 </div>`;
             }
         };
@@ -56,7 +65,7 @@ function updateDom(quizData){
     document.getElementById("question-text").innerHTML = quizData.question.text;
 
     let choices = '';
-    if (quizData.question.type == 'pilihan-ganda'){
+    if (quizData.question.type == 'pilihan-ganda') {
         for (let key in quizData.question.choices) {
             choices += `<div class="choice-wrapper">
             <input type="radio" class="form-check-input btn-check" name="choices" id="option-${key}" value="${quizData.question.choices[key]}">
@@ -86,13 +95,13 @@ function updateDom(quizData){
     document.getElementById("question-choices").innerHTML = choices;
 
     document.getElementById("question-explanation").innerHTML = quizData.question.explanation;
-    
+
     try {
         MathJax.typesetPromise();
-    } catch(e) {
+    } catch (e) {
         console.log(e)
     };
-    document.getElementById('load-question').classList.add('hidden')
+    document.getElementById('load-question').classList.add('hidden');
 };
 
 function shuffle(url) {
@@ -100,26 +109,26 @@ function shuffle(url) {
     fetch(url, {
         method: 'post',
         headers: headers,
-        body : JSON.stringify(body),
-        }).then((response) => {
-            return response.json()
-        }).then((res) => {
-            updateDom(res);
-            updateUserData(res);
-        });
+        body: JSON.stringify(body),
+    }).then((response) => {
+        return response.json()
+    }).then((res) => {
+        updateDom(res);
+        updateUserData(res);
+    });
 };
 
-window.addEventListener('load', function() {
+window.addEventListener('load', function () {
     function initial(url) {
         fetch(url, {
             method: 'get',
             headers: headers,
-            }).then((response) => {
-                return response.json();
-            }).then((res) => {
-                updateDom(res);
-                updateUserData(res);
-            });
+        }).then((response) => {
+            return response.json();
+        }).then((res) => {
+            updateDom(res);
+            updateUserData(res);
+        });
     };
     document.getElementById('load-question').classList.remove('hidden')
     initial(url);
@@ -142,7 +151,7 @@ document.getElementById("btn-lanjut").addEventListener('click', function () {
     document.getElementById('btn-solution').classList.add('hidden');
     document.getElementById("btn-submit").classList.remove('hidden');
     document.getElementById('btn-lanjut').classList.add('hidden');
-    document.getElementById('question-text').scrollIntoView({ block: 'end',  behavior: 'smooth' });
+    document.getElementById('question-text').scrollIntoView({ block: 'end', behavior: 'smooth' });
 });
 
 // SUBMIT BUTTON
@@ -154,15 +163,15 @@ document.getElementById("btn-submit").addEventListener('click', function () {
     document.getElementById("btn-loading").classList.remove('hidden');
     let userChoice;
     let nullCheck = 0;
-    if(userData.question.type == 'pilihan-ganda'){
+    if (userData.question.type == 'pilihan-ganda') {
         if (document.querySelector('input[name="choices"]:checked') != null) {
             userChoice = document.querySelector('input[name="choices"]:checked').value
         } else {
             userChoice = null
         };
         const choices = document.querySelectorAll('input[name="choices"]');
-        for(let i=0; i<choices.length; i++) {
-        choices[i].disabled = true;
+        for (let i = 0; i < choices.length; i++) {
+            choices[i].disabled = true;
         };
     } else {
         userChoice = {}
@@ -172,23 +181,23 @@ document.getElementById("btn-submit").addEventListener('click', function () {
             try {
                 val = document.querySelector(`input[name=choice-${i}]:checked`).value;
             }
-            catch(err) {
+            catch (err) {
                 nullCheck += 1;
             };
             userChoice[key] = val;
-        document.querySelectorAll(`input[name=choice-${i}]`)[0].disabled = true
-        document.querySelectorAll(`input[name=choice-${i}]`)[1].disabled = true
-        }; 
+            document.querySelectorAll(`input[name=choice-${i}]`)[0].disabled = true
+            document.querySelectorAll(`input[name=choice-${i}]`)[1].disabled = true
+        };
         userChoice = JSON.stringify(userChoice);
     };
 
-    let body =  updateUserData(userData);
+    let body = updateUserData(userData);
     body.userAnswer = userChoice
-   
+
     fetch(url, {
-    method: 'post',
-    headers: headers,
-    body: JSON.stringify(body),
+        method: 'post',
+        headers: headers,
+        body: JSON.stringify(body),
     }).then((response) => {
         return response.json()
     }).then((res) => {
@@ -204,18 +213,18 @@ document.getElementById("btn-submit").addEventListener('click', function () {
         };
 
         document.getElementById("btn-loading").classList.add('hidden');
-        if(res.allQuestionId.length == res.questionIdTaken.length){
+        if (res.allQuestionId.length == res.questionIdTaken.length) {
             document.getElementById('btn-selesai').classList.remove('hidden');
         } else {
             document.getElementById('btn-lanjut').classList.remove('hidden');
         };
 
-        document.querySelector(".progress-bar").style.width = `${res.progress*100}%`;
-        
+        document.querySelector(".progress-bar").style.width = `${res.progress * 100}%`;
+
         if (userData.question.explanationType != null && (userData.question.explanation != null || userData.question.explanation != '')) {
             document.getElementById('btn-solution').classList.remove('hidden');
         };
-        
+
         updateUserData(res);
     });
 });
@@ -223,7 +232,7 @@ document.getElementById("btn-submit").addEventListener('click', function () {
 // FILTER BUTTON
 document.getElementById("btn-filter").addEventListener('click', function () {
     const userFilter = {}
-    for (key in userData.filter){
+    for (key in userData.filter) {
         const l = []
         for (const value of document.querySelectorAll(`input[name=${key}]:checked`).values()) {
             l.push(value.value);
@@ -231,50 +240,51 @@ document.getElementById("btn-filter").addEventListener('click', function () {
         userFilter[key] = l;
     };
 
-    for (key in userFilter){
-        if(userFilter[`${key}`].length == 0) {
+    for (key in userFilter) {
+        if (userFilter[`${key}`].length == 0) {
             userFilter[`${key}`] = userData.filter[`${key}`];
         };
     };
 
-    if(JSON.stringify(userData.activeFilter) != JSON.stringify(userFilter)) {
+    if (JSON.stringify(userData.activeFilter) != JSON.stringify(userFilter)) {
         document.getElementById('load-question').classList.remove('hidden')
         document.getElementById("question-text").innerHTML = '';
         document.getElementById("question-choices").innerHTML = '';
         if (document.querySelector('.alert:not(.hidden)') != null) {
             document.querySelector('.alert:not(.hidden)').classList.add('hidden');
         };
-        let body =  updateUserData(userData);
+        let body = updateUserData(userData);
         body.activeFilter = userFilter;
         fetch(urlFilter, {
             method: 'post',
             headers: headers,
             body: JSON.stringify(body),
-            }).then((response) => {
-                return response.json()
-            }).then((res) => {
-                if (document.getElementById("btn-submit").classList.contains('hidden')) {
-                    document.getElementById("btn-shuffle").classList.remove('hidden');
-                    document.getElementById('btn-solution').classList.add('hidden');
-                    document.getElementById("btn-submit").classList.remove('hidden');
-                    document.getElementById('btn-lanjut').classList.add('hidden');
-                }
-                if (res.currQuestionId) {
-                    updateDom(res);
-                    document.getElementById('question-text').scrollIntoView();
-                    document.getElementById('btn-shuffle').disabled = false
-                    document.getElementById('btn-submit').disabled = false
-                    document.getElementById('btn-stop').style.removeProperty('pointer-events')
-                } else {
-                    document.getElementById('load-question').classList.add('hidden');
-                    document.getElementById("question-text").innerHTML = `<p class="text-center">Soal dengan filter yang kamu pilih tidak ada.</p>`;
-                    document.querySelector(".progress-bar").style.width = `${res.progress * 100}%`;
-                    document.getElementById('btn-shuffle').disabled = true
-                    document.getElementById('btn-submit').disabled = true
-                    document.getElementById('btn-stop').style.pointerEvents = 'none'
-                };
-                updateUserData(res);
-            });
+        }).then((response) => {
+            return response.json()
+        }).then((res) => {
+            if (document.getElementById("btn-submit").classList.contains('hidden')) {
+                document.getElementById("btn-shuffle").classList.remove('hidden');
+                document.getElementById('btn-solution').classList.add('hidden');
+                document.getElementById("btn-submit").classList.remove('hidden');
+                document.getElementById('btn-lanjut').classList.add('hidden');
+            }
+            if (res.currQuestionId) {
+                updateDom(res);
+                document.getElementById('question-text').scrollIntoView();
+                document.getElementById('btn-shuffle').disabled = false;
+                document.getElementById('btn-submit').disabled = false;
+                document.getElementById('btn-stop').style.removeProperty('pointer-events');
+            } else {
+                document.getElementById('load-question').classList.add('hidden');
+                document.getElementById("question-text").innerHTML = `<p class="text-center">Soal dengan filter yang kamu pilih tidak ada.</p>`;
+                document.querySelector(".progress-bar").style.width = `${res.progress * 100}%`;
+                document.getElementById('btn-selesai').classList.add('hidden');
+                document.getElementById('btn-shuffle').disabled = true;
+                document.getElementById('btn-submit').disabled = true;
+                document.getElementById('btn-stop').style.pointerEvents = 'none';
+            };
+            updateUserData(res);
+        });
     };
     for (const key in userData.filter) {
         for (let i in userData.filter[key]) {
@@ -284,7 +294,6 @@ document.getElementById("btn-filter").addEventListener('click', function () {
         };
     };
 });
-
 
 // FILTER TOGGLE ANIMATION
 // const filter = document.getElementById('filter');
@@ -299,20 +308,23 @@ document.getElementById('filter').addEventListener('hide.bs.offcanvas', function
 // SHUFFLE BUTTON & STOP BUTTON ANIMATION
 // const btnShuffle = document.getElementById("btn-shuffle");
 // const btnStop = document.getElementById('btn-stop');
-function removeBtnAni() {
-    document.getElementById('btn-shuffle').style.backgroundImage = 'url("/static/quiz/image/shuffle.svg")'
+function removeBtnShuffleAni() {
     document.getElementById("btn-shuffle").classList.remove('rotated360');
+    document.getElementById("btn-shuffle").innerHTML = `<i class="bi bi-shuffle">`;
+}
+function removeBtnStopAni() {
     document.getElementById('btn-stop').classList.remove("fliped");
 }
 document.getElementById("btn-shuffle").addEventListener('click', function () {
-    document.getElementById('btn-shuffle').style.backgroundImage = 'url("/static/quiz/image/arrow-clockwise-active.svg")'
+    document.getElementById("btn-shuffle").innerHTML = `<i class="bi bi-arrow-clockwise" style="color: black;">`;
     document.getElementById("btn-shuffle").classList.add('rotated360');
-    setTimeout(removeBtnAni, 500);
+    setTimeout(removeBtnShuffleAni, 500);
 })
 
 document.getElementById('btn-stop').addEventListener('click', function () {
+    document.getElementById("btn-stop").innerHTML = `<i class="bi bi-x-circle-fill" style="color: #E21818;"></i>`
     document.getElementById('btn-stop').classList.add('fliped');
-    setTimeout(removeBtnAni, 500);
+    setTimeout(removeBtnStopAni, 500);
 });
 
 // SHOW SOLUTION
@@ -322,12 +334,12 @@ document.getElementById('btn-stop').addEventListener('click', function () {
 document.getElementById('solution-close').addEventListener('click', function () {
     document.querySelector('.solution').className = 'solution close';
     document.querySelector('.solution').removeChild(document.querySelector('.solution').children[1]);
-    document.getElementById('btn-solution').style.backgroundImage = 'url("/static/quiz/image/lightbulb.svg")';
+    document.getElementById('btn-solution').innerHTML = `<i class="bi bi-lightbulb">`;
 });
 document.getElementById('btn-solution').addEventListener('click', function () {
     const backDrop = document.createElement('div');
     backDrop.classList.add('offcanvas-backdrop', 'fade', 'show');
     document.querySelector('.solution').className = 'solution open';
     document.querySelector('.solution').insertAdjacentElement('beforeend', backDrop);
-    document.getElementById('btn-solution').style.backgroundImage = 'url("/static/quiz/image/lightbulb-fill.svg")';
+    document.getElementById('btn-solution').innerHTML = `<i class="bi bi-lightbulb-fill" style="color:#FCE22A;"></i>`;
 });

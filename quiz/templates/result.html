@@ -22,7 +22,7 @@
         <!-- NAV MOBILE -->
         <div class="nav-mobile">
             <div class="nav-mobile-menu">
-                <a class="back" href="/" title="Back Home"></a>
+                <a class="back" href="/" title="Back Home"><i class="bi bi-arrow-left"></i></a>
                 <h3>Latihan Matematika</h3>
             </div>
         </div>
@@ -66,7 +66,7 @@
             </div>
             <div class="bottom-shape">
                 <div class="bottom-menu">
-                    <a class="btn btn-reset" title="Coba Mulai dari Awal" id="btn-reset" href="{% url 'reset' %}"></a>
+                    <a class="btn btn-reset" title="Coba Mulai dari Awal" id="btn-reset" href="{% url 'reset' %}"><i class="bi bi-arrow-clockwise"></i></a>
                     <a class="btn btn-outline-dark {% if progress == 1 %} hidden {% endif %}" title="Lanjut Mengerjakan" id="btn-next" href="{% url 'render-quiz' %}">Lanjut</a>
                 </div>
             </div>

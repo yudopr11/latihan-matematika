@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Kuis Matematika">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
@@ -22,7 +23,7 @@
     </script>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
-    <script src="{% static 'quiz/script/quiz.js' %}" data-url="{% url 'quiz' %}" defer data-url-shuffle="{% url 'shuffle' %}" data-url-filter="{% url 'filter' %}" defer></script>
+    <script src="{% static 'quiz/script/quiz.js' %}" data-url="{% url 'quiz' %}" data-url-shuffle="{% url 'shuffle' %}" data-url-filter="{% url 'filter' %}" defer></script>
     <link rel="icon" href="{% static 'global/image/favicon.png' %}">
     <title>Latihan Matematika • yudopr</title>
 </head>
@@ -32,12 +33,12 @@
         <!-- NAV MOBILE -->
         <div class="nav-mobile">
             <div class="nav-mobile-menu">
-                <a class="back" href="/" title="Back Home"></a>
+                <a class="back" href="/" title="Back Home"><i class="bi bi-arrow-left"></i></a>
                 <h3>Latihan Matematika</h3>
             </div>
-            <div class="filter" data-bs-toggle="offcanvas" data-bs-target="#filter" id="filter-toggle" title="Filter"></div>
+            <div class="filter" data-bs-toggle="offcanvas" data-bs-target="#filter" id="filter-toggle" title="Filter"><i class="bi bi-filter-square-fill"></i></div>
         </div>
-
+        
         <!-- CONTENT -->
         <div class="content">
             <div class="top-shape">
@@ -46,7 +47,7 @@
                     <div class="progress-bar"></div>
                 </div>
             </div>
-            <div class="middle-shape">
+            <div class="middle-shape">{% csrf_token %}
                 <div class="loading hidden" id="load-question">
                     <div class="spinner-border" role="status"></div>
                 </div>
@@ -72,15 +73,15 @@
             </div>
             <div class="bottom-shape">
                 <div class="bottom-menu">
-                    <button class="btn btn-shuffle" title="Ganti Soal" id="btn-shuffle"></button>
-                    <button class="btn btn-solution hidden" title="Buka Solusi" id="btn-solution"></button>
+                    <button class="btn btn-shuffle" title="Ganti Soal" id="btn-shuffle"><i class="bi bi-shuffle"></i></button>
+                    <button class="btn btn-solution hidden" title="Buka Solusi" id="btn-solution"><i class="bi bi-lightbulb"></i></button>
                     <button class="btn btn-outline-dark btn-submit" id="btn-submit" title="Submit Jawaban">Submit</button>
                     <button class="btn btn-outline-dark btn-lanjut hidden" id="btn-lanjut" title="Lanjut ke Soal Berikutnya">Lanjut</button>
                     <div class="spinner-border hidden" role="status" id="btn-loading">
                         <span class="visually-hidden">Loading...</span>
                     </div>
                     <a class="btn btn-outline-dark btn-selesai hidden" id="btn-selesai" title="Selesai" href="{% url 'render-result' %}">Selesai</a>
-                    <a class="btn btn-stop" title="Berhenti" id="btn-stop" href="{% url 'render-result' %}"></a>
+                    <a class="btn btn-stop" title="Berhenti" id="btn-stop" href="{% url 'render-result' %}"><i class="bi bi-x-circle"></i></a>
                 </div>
             </div>
         </div>
@@ -111,6 +112,17 @@
                 </div>
                 <small>Menggunakan filter akan mereset progres pengerjaan kamu.</small>
                 <button type="submit" class="btn btn-outline-dark" title="Simpan dan Aplikasikan Filter" id="btn-filter" data-bs-dismiss="offcanvas" aria-label="Close">Simpan</button>
+            </div>
+        </div>
+        <div class="toast-container position-fixed top-0 end-0 p-3">
+            <div id="filter-alert" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+              <div class="toast-header">
+                <strong class="me-auto">Alert</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+              </div>
+              <div class="toast-body">
+                Soal tidak ditemukan.
+              </div>
             </div>
         </div>
     </main>

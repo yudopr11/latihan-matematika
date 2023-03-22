@@ -160,4 +160,10 @@ CKEDITOR_CONFIGS = {
     }
 }
 
+# Custom settings
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+CSRF_COOKIE_HTTPONLY = True
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+HTTP_SESSION_SECURE = True
+# CSRF_TRUSTED_ORIGINS = ['*'] #Change to your host, example: ['http://webaku.com'] or ['http://webaku.com', 'https://webaku.com']

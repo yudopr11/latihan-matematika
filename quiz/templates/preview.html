@@ -32,10 +32,10 @@
         <!-- NAV MOBILE -->
         <div class="nav-mobile">
             <div class="nav-mobile-menu">
-                <a class="back" href="/" title="Back Home"></a>
+                <a class="back" href="/" title="Back Home" style="pointer-events: none;"><i class="bi bi-arrow-left"></i></a>
                 <h3>Latihan Matematika</h3>
             </div>
-            <div class="filter" data-bs-toggle="offcanvas" data-bs-target="#filter" id="filter-toggle" title="Filter" disabled></div>
+            <div class="filter" data-bs-toggle="offcanvas" data-bs-target="#filter" id="filter-toggle" title="Filter" disabled><i class="bi bi-filter-square-fill"></i></div>
         </div>
 
         <!-- CONTENT -->
@@ -71,16 +71,16 @@
                 </div>
             </div>
             <div class="bottom-shape">
-                <div class="bottom-menu">
-                    <button class="btn btn-shuffle" title="Ganti Soal" id="btn-shuffle" disabled></button>
-                    <button class="btn btn-solution hidden" title="Buka Solusi" id="btn-solution"></button>
+                <div class="bottom-menu">{% csrf_token %}
+                    <button class="btn btn-shuffle" title="Ganti Soal" id="btn-shuffle" disabled><i class="bi bi-shuffle"></i></button>
+                    <button class="btn btn-solution hidden" title="Buka Solusi" id="btn-solution"><i class="bi bi-lightbulb"></i></button>
                     <button class="btn btn-outline-dark btn-submit" id="btn-submit" title="Submit Jawaban">Submit</button>
                     <button class="btn btn-outline-dark btn-lanjut hidden" id="btn-lanjut" title="Lanjut ke Soal Berikutnya" disabled>Lanjut</button>
                     <div class="spinner-border hidden" role="status" id="btn-loading">
                         <span class="visually-hidden">Loading...</span>
                       </div>
                     <a class="btn btn-outline-dark btn-selesai hidden" id="btn-selesai" title="Selesai" href="{% url 'render-result' %}" style="pointer-events: none;">Selesai</a>
-                    <a class="btn btn-stop" title="Berhenti" id="btn-stop" href="{% url 'render-result' %}" style="pointer-events: none;"></a>
+                    <a class="btn btn-stop" title="Berhenti" id="btn-stop" href="{% url 'render-result' %}" style="pointer-events: none;"><i class="bi bi-x-circle"></i></a>
                 </div>
             </div>
         </div>

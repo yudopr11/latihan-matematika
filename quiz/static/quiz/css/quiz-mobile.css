@@ -1,39 +1,12 @@
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css");
+
 body {
     margin: 0;
 }
 
-.content {
-    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-    border-radius: 40px 40px 0 0;
-}
-
-.top-shape {
-    background-color: white;
-    height: 50px;
-    border-radius: 40px 40px 0 0;
-    padding-top: 1rem;
-    padding-bottom: 1.5rem;
-    padding-left: 5rem;
-    padding-right: 5rem;
-}
-
-.middle-shape {
-    background-color: white;
-    padding-top: 0;
-    padding-bottom: 1.5rem;
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
-    margin-top: 0;
-    border-radius: 0;
-    min-height: 100%;
-    height: calc(100vh - 252px);
-    overflow-y: visible;
-    overflow-x: hidden;
-    box-shadow: none;
-}
-
 .nav-mobile {
     visibility: visible;
+    height: 100px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -50,77 +23,27 @@ body {
 }
 
 .nav-mobile .nav-mobile-menu .back {
-    background-image: url("/static/quiz/image/arrow-left.svg");
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-position: center;
-    width: 20px;
-    height: 20px;
+    font-size: 1.5rem;
+    color: black;
 }
 
 .nav-mobile .nav-mobile-menu h3 {
     font-weight: 700;
-}
-
-.question-wrapper {
-    position: relative;
-}
-
-.question {
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
+    margin-bottom: 0;
 }
 
 .filter {
-    background-image: url("/static/quiz/image/filter-square-fill.svg");
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-position: center;
-    width: 30px;
-    height: 30px;
+   font-size: 2rem;
 }
 
-.rotated {
+.filter.rotated {
     transform: rotate(0deg);
     transition: transform 0.3s linear;
 }
 
-.rotated.open {
+.filter.rotated.open {
     transform: rotate(90deg);
     transition: transform 0.3s linear;
-}
-
-.bottom-shape {
-    position: fixed;
-    max-width: 768px;
-    width: 100%;
-    height: 102px;
-    background-color: white;
-}
-
-.bottom-menu {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    gap: 3rem;
-    padding: 2rem;
-    border: 0;
-}
-
-.offcanvas {
-    width: 60% !important;
-    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-}
-
-.offcanvas-header {
-    padding-left: 1.5rem !important;
-    padding-right: 1.5rem !important;
-}
-
-.offcanvas-end {
-    border-left: 0 !important;
-    border-radius: 40px 0px 0px 40px;
 }
 
 .filter-menu {
@@ -132,16 +55,62 @@ body {
     padding-bottom: 1rem;
     padding-right: 1.5rem;
 }
+
 #question-filter {
     display: flex;
     flex-direction: column;
     gap: 2rem;
 }
+
 .filter-menu .filter-option .option-list {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     gap: 1rem;
+}
+
+.content {
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    border-radius: 40px 40px 0 0;
+}
+
+.top-shape {
+    position: relative;
+    background-color: white;
+    max-width: 768px;
+    width: 100%;
+    height: 50px;
+    border-radius: 40px 40px 0 0;
+    padding-top: 1rem;
+    padding-bottom: 1.5rem;
+    padding-left: 5rem;
+    padding-right: 5rem;
+}
+
+.middle-shape {
+    position: relative;
+    background-color: white;
+    padding-top: 0;
+    padding-bottom: 1.5rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    margin-top: 0;
+    border-radius: 0;
+    max-width: 768px;
+    width: 100%;
+    height: calc(100vh - 250px);
+    overflow-y: visible;
+    overflow-x: hidden;
+    box-shadow: none;
+}
+
+.question-wrapper{
+    margin-bottom: 60px;
+}
+
+.question {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
 }
 
 .choices {
@@ -165,6 +134,44 @@ body {
     min-width: 100px;
 }
 
+.bottom-shape {
+    position: fixed;
+    bottom: 0;
+    max-width: 768px;
+    width: 100%;
+    height: 100px;
+    background-color: white;
+    border-top: solid 1px #dadada;
+}
+
+.bottom-menu {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    padding-bottom: 0;
+    padding-top: 20px;
+    border: 0;
+}
+
+.offcanvas {
+    width: 60% !important;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+.offcanvas-header {
+    padding-left: 1.5rem !important;
+    padding-right: 1.5rem !important;
+}
+
+.offcanvas-end {
+    border-left: 0 !important;
+    border-radius: 40px 0px 0px 40px;
+}
+
 .btn {
     border-radius: 20px;
 }
@@ -186,56 +193,41 @@ body {
 }
 
 .btn-shuffle {
-    background-image: url("/static/quiz/image/shuffle.svg");
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-position: center;
-    width: 30px;
-    height: 30px;
+    font-size: 2rem;
+    color: rgba(85, 85, 85, 5);
+    padding-left: 0;
+    padding-right: 0;
 }
 
-.btn-stop {
-    background-image: url("/static/quiz/image/x-circle.svg");
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-position: center;
-    width: 30px;
-    height: 30px;
-}
-
-.btn-stop:active,
-.btn-stop:focus {
-    background-image: url("/static/quiz/image/x-circle-fill.svg");
-}
-
-.btn-solution {
-    background-image: url("/static/quiz/image/lightbulb.svg");
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-position: center;
-    width: 30px;
-    height: 30px;
-}
-
-.btn-solution:active,
-.btn-solution:focus {
-    background-image: url("/static/quiz/image/lightbulb-fill.svg");
-}
-
-.rotated360 {
+.btn-shuffle.rotated360 {
     transform: rotate(360deg);
     transition: all 0.5s;
 }
 
-.fliped {
+.btn-stop {
+    font-size: 2rem;
+    color: rgba(85, 85, 85, 5);
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.btn-stop.fliped {
     transform: rotateY(180deg);
     transition: all 0.5s;
+}
+
+.btn-solution {
+    font-size: 2rem;
+    color: rgba(85, 85, 85, 5);
+    padding-left: 0;
+    padding-right: 0;
 }
 
 .btn-submit,
 .btn-lanjut,
 .btn-selesai {
     flex-grow: 1;
+    font-weight: 700;
 }
 
 .btn.btn-stop,
