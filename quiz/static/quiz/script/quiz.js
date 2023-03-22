@@ -259,10 +259,22 @@ document.getElementById("btn-filter").addEventListener('click', function () {
                     document.getElementById("btn-submit").classList.remove('hidden');
                     document.getElementById('btn-lanjut').classList.add('hidden');
                 }
-                updateDom(res);
-                document.getElementById('question-text').scrollIntoView();
+                if (res.currQuestionId) {
+                    updateDom(res);
+                    document.getElementById('question-text').scrollIntoView();
+                } else {
+                    document.getElementById('load-question').classList.add('hidden');
+                    document.getElementById("question-text").innerHTML = `<p class="text-center">Soal dengan filter yang kamu pilih tidak ada.</p>`;
+                };
                 updateUserData(res);
             });
+    };
+    for (const key in userData.filter) {
+        for (let i in userData.filter[key]) {
+            if (userData.activeFilter[key].includes(userData.filter[key][i])) {
+                document.getElementById(`${key}-${i}`).checked = true;
+            };
+        };
     };
 });
 

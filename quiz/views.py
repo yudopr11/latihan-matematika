@@ -10,44 +10,36 @@ from django.views.decorators.csrf import csrf_exempt
 
 from .models import BankSoal
 
+
 headers = {
     "Content-Type": "application/json; charset=utf-8",
     "Cache-Control": "no-cache",
-    "mode": "same-origin",
 }
 
+
 def bank_soal_serializer(pk):
-    if pk == "all":
-        data = serializers.serialize("json", BankSoal.objects.all())
-    else:
-        data = serializers.serialize(
-            "json", [BankSoal.objects.filter(status=1).get(pk=pk)])
-    temp_json = json.loads(data)
-    data_json = {}
+    data = serializers.serialize("json", [BankSoal.objects.get(pk=pk)])
+    data_json = json.loads(data)[0]
+    data_json = data_json["fields"]
+    try:
+            data_json["choices"] = json.loads(data_json["choices"])
+    except:
+            data_json["choices"] = json.loads(data_json["choices"].replace("\'", "\""))
 
-    for item in temp_json:
-        id = str(item["pk"])
-        data_json[id] = item["fields"]
-        
+    if data_json["answer"][0] in ("\'", "\"") and data_json["answer"][-1] in ("\'", "\""):
+            data_json["answer"] = data_json["answer"][1:-1]
+
+    if data_json["answer"][0] == "{" and data_json["answer"][-1] == "}":
         try:
-            data_json[id]["choices"] = json.loads(data_json[id]["choices"])
+            data_json["answer"] = json.loads(data_json["answer"])
         except:
-            data_json[id]["choices"] = json.loads(data_json[id]["choices"].replace("\'","\""))
-
-        if data_json[id]["answer"][0] in ("\'","\"") and data_json[id]["answer"][-1] in ("\'","\""):
-            data_json[id]["answer"] = data_json[id]["answer"][1:-1]
-
-        if data_json[id]["answer"][0] == "{" and data_json[id]["answer"][-1] == "}":
-            try:
-                data_json[id]["answer"] = json.loads(data_json[id]["answer"])
-            except:
-                data_json[id]["answer"] = json.loads(data_json[id]["answer"].replace("\'","\""))
+            data_json["answer"] = json.loads(data_json["answer"].replace("\'", "\""))
 
     return data_json
 
 
 def get_question(question_id):
-    question = bank_soal_serializer(question_id)[question_id]
+    question = bank_soal_serializer(question_id)
     key_choices = [alc[i].upper() for i in range(len(question["choices"]))]
     random.shuffle(question["choices"])
     question["choices"] = {key_choices[i]: question["choices"][i]
@@ -80,8 +72,9 @@ def reset(request):
 @csrf_exempt
 def quiz(request):
     resp = {"status": 405}
-    filter = {"sources": sorted(list(set(BankSoal.objects.values_list("source", flat=True))))}
-    allQuestionId = list(BankSoal.objects.filter(status=1, source__in=filter["sources"]).values_list("pk", flat=True))
+    filter = {"subject": sorted(list(set(BankSoal.objects.values_list("subject", flat=True)))),
+              "sources": sorted(list(set(BankSoal.objects.values_list("source", flat=True))))}
+    allQuestionId = list(BankSoal.objects.filter(status=1, subject__in=filter["subject"], source__in=filter["sources"]).values_list("pk", flat=True))
     currQuestionId = random.choice(allQuestionId)
     question = get_question(str(currQuestionId))
     
@@ -235,9 +228,14 @@ def filter(request):
             if len(activeFilter[key]) == 0:
                 activeFilter[key] = userData["filter"][key]
         
-        allQuestionId = list(BankSoal.objects.filter(status=1, source__in=activeFilter["sources"]).values_list("pk", flat=True))
-        currQuestionId = random.choice(allQuestionId)
-        question = get_question(str(currQuestionId))
+        allQuestionId = list(BankSoal.objects.filter(status=1, subject__in=activeFilter["subject"], source__in=activeFilter["sources"]).values_list("pk", flat=True))
+
+        try:
+            currQuestionId = random.choice(allQuestionId)
+            question = get_question(str(currQuestionId))
+        except:
+            currQuestionId = None
+            question = {"question": None, "choices": None, "explanation": None, "type": None, "explanation_type": None}
 
         resp = {"question": {
                             "text": question["question"], 
@@ -280,7 +278,8 @@ def render_preview(request, pk):
 @csrf_exempt
 def preview(request, pk):
     resp = {"status": 405}
-    filter = {"sources": sorted(list(set(BankSoal.objects.values_list("source", flat=True))))}
+    filter = {"subject": sorted(list(set(BankSoal.objects.values_list("subject", flat=True)))), 
+              "sources": sorted(list(set(BankSoal.objects.values_list("source", flat=True))))}
     allQuestionId = list(BankSoal.objects.filter(status=1, source__in=filter["sources"]).values_list("pk", flat=True))
     currQuestionId = pk
     question = get_question(str(currQuestionId))

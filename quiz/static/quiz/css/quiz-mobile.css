@@ -129,7 +129,11 @@ body {
     padding-bottom: 1rem;
     padding-right: 1.5rem;
 }
-
+#question-filter {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
 .filter-menu .filter-option .option-list {
     display: flex;
     flex-direction: row;
