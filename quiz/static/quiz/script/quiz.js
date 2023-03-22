@@ -265,6 +265,7 @@ document.getElementById("btn-filter").addEventListener('click', function () {
                 } else {
                     document.getElementById('load-question').classList.add('hidden');
                     document.getElementById("question-text").innerHTML = `<p class="text-center">Soal dengan filter yang kamu pilih tidak ada.</p>`;
+                    document.querySelector(".progress-bar").style.width = `${res.progress * 100}%`;
                 };
                 updateUserData(res);
             });
